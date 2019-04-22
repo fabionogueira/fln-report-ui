@@ -1,0 +1,43 @@
+/* box layout */
+hbox, .hbox{display:flex; justify-content:flex-start; align-items:stretch; flex-direction:row;}
+vbox, .vbox{display:flex; justify-content:flex-start; align-items:stretch; flex-direction:column;}
+client, .client{display:flex; flex:1;position:relative;}
+
+[valign="top"], .v-align--top {align-items:flex-start;}
+[valign="bottom"], .v-align--bottom {align-items:flex-end;}
+[valign="center"], .v-align--center {align-items:center;}
+
+[halign="left"], .h-align--left {justify-content:flex-start;}
+[halign="right"], .h-align--right {justify-content:flex-end;}
+[halign="center"], .h-align--center {justify-content:center;}
+
+vbox[layout="space-around"], hbox[layout="space-around"], .vbox[layout="space-around"], .hbox[layout="space-around"] {justify-content:space-around;}
+vbox[layout="space-between"], hbox[layout="space-between"], .vbox[layout="space-between"], .hbox[layout="space-between"]{justify-content:space-between;}
+vbox[layout="center center"], hbox[layout="center"], .vbox[layout="center center"], .hbox[layout="center center"]{justify-content:center; align-items:center;}
+
+spacer, .spacer{flex-grow: 1;}
+
+[box-test]{ border: solid 1px red; margin: 2px; padding: 2px; }
+
+/* grid layout */
+.grid-row:before, .grid-row:after { content: " "; display: table; }
+.grid-row:after { clear: both; }
+.grid-col_1_of_1, .grid-col_1_of_2, .grid-col_1_of_3, .grid-col_1_of_4, .grid-col_2_of_2, .grid-col_2_of_3, .grid-col_2_of_4, .grid-col_3_of_3, .grid-col_3_of_4, .grid-col_4_of_4 { position: relative; min-height: 1px; float: left; padding: 15px; }
+.grid-col_1_of_1, .grid-col_2_of_2, .grid-col_3_of_3, .grid-col_4_of_4 { width: 100%; }
+.grid-col_1_of_2, .grid-col_2_of_4 { width: 50%; }
+.grid-col_1_of_3 { width: 33.26%; }
+.grid-col_2_of_3 { width: 66.13%; }
+.grid-col_1_of_4 { width: 25%; }
+.grid-col_3_of_4 { width: 74.6%; }
+
+/* dispositivo 960px */
+@media screen and (max-width: 960px) {
+    .grid-col_1_of_2, .grid-col_1_of_3, .grid-col_2_of_3, .grid-col_1_of_4 { width: 50%; }
+    .grid-col_2_of_2, .grid-col_3_of_3, .grid-col_1_of_3:nth-child(3), .grid-col_2_of_4, .grid-col_3_of_4, .grid-col_4_of_4 { width: 100%!important; }
+}
+
+/* dispositivo 720px */
+@media screen and (max-width: 720px) {
+  .grid-col_1_of_2, .grid-col_2_of_2, .grid-col_1_of_3, .grid-col_2_of_3, .grid-col_3_of_3, .grid-col_1_of_4, .grid-col_2_of_4, .grid-col_3_of_4, .grid-col_4_of_4 { width: 100%; }
+}
+
