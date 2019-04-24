@@ -124,6 +124,7 @@ export default {
         align-items: center;
         padding-right: 10px;
         padding-left: 5px;
+        white-space: nowrap;
     }
     .fln-treeview li{
         padding-left: 20px;

@@ -40,7 +40,6 @@ export default {
             if (target){
                 this._height = target.offsetHeight
                 this._width = target.offsetWidth
-                console.log(this._width)
             }
         },
 
@@ -68,7 +67,7 @@ export default {
 
 <style scoped>
     .fln-splitter{
-        background: #e1e1e1;
+        background: #f5f7fa;
     }
     .fln-splitter-vertical{
         min-width: 5px;

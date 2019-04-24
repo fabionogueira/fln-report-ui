@@ -1,0 +1,26 @@
+/* -- zoom -- */
+@keyframes flnmodal-zoom-enter {
+    from {
+        transform: scale3d(.3, .3, .3);
+    }
+}
+@keyframes flnmodal-zoom-leave {
+    to {
+        transform: scale3d(.3, .3, .3);
+    }
+}
+/* 
+.flnmodal-zoom-enter-active {
+    animation: flnmodal-zoom-enter .4s cubic-bezier(0.4, 0, 0, 1.5);
+}
+.flnmodal-zoom-leave-active {
+    animation: flnmodal-zoom-leave .4s;
+} */
+
+.flnmodal-fade-enter-active  .fln-modal-content{
+    animation: flnmodal-zoom-enter 3s cubic-bezier(0.4, 0, 0, 1.5);
+}
+
+.flnmodal-fade-enter-active  .fln-modal-content {
+    animation: flnmodal-zoom-leave 3s;
+}

@@ -161,7 +161,7 @@ const dragManager = {
         mouse.movimentX = activeOptions.orientation == 'vertical' ? mouse.x : event.x - mouse.x
         mouse.movimentY = activeOptions.orientation == 'horizontal' ? mouse.y : event.y - mouse.y
 
-        if (!activeOptions.started && (Math.abs(mouse.movimentX) >=2 || Math.abs(mouse.movimentY) >= 2)){
+        if (!activeOptions.started && (Math.abs(mouse.movimentX) >= 1 || Math.abs(mouse.movimentY) >= 1)){
             activeOptions.started = true
             return dragManager.dispatch(activeOptions.dragsource, 'dragstart')
         }

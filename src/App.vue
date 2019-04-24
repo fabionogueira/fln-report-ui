@@ -1,83 +1,102 @@
 <template>
     <div id="app" class="vbox">
         <hbox box-test>Report Edit</hbox>
-        <hbox box-test>
-            <button :disabled="!selectedComponentIsChild" @click="bringToFront()">bringToFront</button>
-            <button :disabled="!selectedComponentIsChild" @click="sendToBack()">sendToBack</button>
-            <button :disabled="!selectedComponentIsChild" @click="copy">copy</button>
-            <button :disabled="!selectedComponentIsChild" @click="cut">cut</button>
-            <button @click="paste">paste</button>
-            <button :disabled="!selectedComponentIsChild" @click="remove">delete</button>
-            <button @click="undo">undo</button>
-            <button>redo</button>
-            <button @click="getJSON">getJSON</button>
-        </hbox>
-        <hbox box-test class="client">
-            <vbox box-test>
-                <vbox box-test>
-                    components
-                    <button @click="dragComponent('fln-text', $event)">fln-text</button>
-                    <button>line</button>
-                    <button>rectangle</button>
-                    <button>elipse</button>
-                    <button>page break</button>
-                    <button>sub report</button>
-                </vbox>
-
-                <fln-splitter></fln-splitter>
-                
-                <hbox box-test>
-                    <fln-tree-view ref="tree" 
-                        :root="componentsTree"
-                        @itemclick="onTreeItemClick"></fln-tree-view>
-                </hbox>
-            </vbox>
+        <hbox class="client">
             
             <fln-splitter></fln-splitter>
 
-            <client box-test>
-                <div class="report">
-                    <div class="report-content">
+            <client style="padding:4px">
+                <el-tabs type="border-card" class="tabs-client" v-model="activeTab" xtab-click="handleClick">
+                    <!-- tab designer -->
+                    <el-tab-pane label="Designer" name="designer" style="height:100%">
+                        <hbox class="toolbar">
+                            <el-button size="small" :disabled="!selectedComponentIsChild" @click="bringToFront()">bringToFront</el-button>
+                            <el-button size="small" :disabled="!selectedComponentIsChild" @click="sendToBack()">sendToBack</el-button>
+                            <el-button icon="el-icon-edit" title="copy" :disabled="!selectedComponentIsChild" @click="copy"></el-button>
+                            <el-button size="small" :disabled="!selectedComponentIsChild" @click="cut">cut</el-button>
+                            <el-button size="small" @click="paste">paste</el-button>
+                            <el-button size="small" :disabled="!selectedComponentIsChild" @click="remove">delete</el-button>
+                            <el-button size="small" @click="undo">undo</el-button>
+                            <el-button size="small">redo</el-button>
+                            <el-button size="small" @click="getJSON">getJSON</el-button>
+                        </hbox>
 
-                        <fln-section class="section-content section-grid" dropzone
-                            v-for="item in componentsTree.children"
-                            v-show="item.visible"
-                            :key="item.id"
-                            :ref="item.id"
-                            :label="item.label"
-                            :type="item.id"
-                            @add="onComponentAdded"
-                            @remove="onComponentRemoved"></fln-section>
+                        <client>
+                            <vbox>
+                                <vbox>
+                                    components
+                                    <button @click="dragComponent('fln-text', $event)">fln-text</button>
+                                    <button>line</button>
+                                    <button>rectangle</button>
+                                    <button>elipse</button>
+                                    <button>page break</button>
+                                    <button>sub report</button>
+                                </vbox>
 
-                    </div>
-                </div>
+                                <fln-splitter></fln-splitter>
+                                
+                                <hbox>
+                                    <fln-tree-view ref="tree" 
+                                        :root="componentsTree"
+                                        @itemclick="onTreeItemClick"></fln-tree-view>
+                                </hbox>
+                            </vbox>
+
+                            <fln-splitter></fln-splitter>
+
+                            <client class="page-content">
+                                <div class="page-design"> 
+                                    <fln-section class="section-content section-grid" dropzone
+                                        v-for="item in componentsTree.children"
+                                        v-show="item.visible"
+                                        :key="item.id"
+                                        :ref="item.id"
+                                        :label="item.label"
+                                        :type="item.id"
+                                        @add="onComponentAdded"
+                                        @remove="onComponentRemoved"></fln-section>
+                                </div>
+                            </client>
+
+                            <fln-splitter target="after"></fln-splitter>
+
+                            <vbox>
+                                <div>report</div>
+                                <div style="overflow:hidden">
+                                    <table border="1">
+                                        <tr><td>paper</td><td>A4</td></tr>
+                                        <tr><td>orientation</td><td>portrait</td></tr>
+                                        <tr><td>margin left</td><td>3</td></tr>
+                                        <tr><td>margin top</td><td>3</td></tr>
+                                        <tr><td>margin right</td><td>3</td></tr>
+                                        <tr><td>margin bottom</td><td>3</td></tr>
+                                        <tr><td>columns</td><td>1</td></tr>
+                                        <tr><td>column spacing</td><td>1</td></tr>
+                                        
+                                        <tr v-for="item in componentsTree.children" :key="item.id+'-tr'">
+                                            <td>{{item.label}}</td>
+                                            <td><input type="checkbox" v-model="item.visible"></td>
+                                        </tr>                        
+                                    </table>
+                                </div>
+                                <fln-splitter></fln-splitter>
+                                <fln-inspector class="client" ref="inspector" @changed="onPropertyChanged"></fln-inspector>
+                            </vbox>
+                        </client>
+
+                    </el-tab-pane>
+
+                    <el-tab-pane label="JSON" name="second">JSON</el-tab-pane>
+                    <el-tab-pane label="Test" name="third">Test</el-tab-pane>
+                </el-tabs>
             </client>
 
-            <fln-splitter target="after"></fln-splitter>
-
-            <vbox box-test>
-                <div>report</div>
-                <div style="overflow:hidden">
-                    <table border="1">
-                        <tr><td>paper</td><td>A4</td></tr>
-                        <tr><td>orientation</td><td>portrait</td></tr>
-                        <tr><td>margin left</td><td>3</td></tr>
-                        <tr><td>margin top</td><td>3</td></tr>
-                        <tr><td>margin right</td><td>3</td></tr>
-                        <tr><td>margin bottom</td><td>3</td></tr>
-                        <tr><td>columns</td><td>1</td></tr>
-                        <tr><td>column spacing</td><td>1</td></tr>
-                        
-                        <tr v-for="item in componentsTree.children" :key="item.id+'-tr'">
-                            <td>{{item.label}}</td>
-                            <td><input type="checkbox" v-model="item.visible"></td>
-                        </tr>                        
-                    </table>
-                </div>
-                <fln-splitter></fln-splitter>
-                <fln-inspector class="client" ref="inspector" @changed="onPropertyChanged"></fln-inspector>
-            </vbox>
+            
         </hbox>
+
+        <!-- <fln-modal>
+            <h1>MODAL</h1>
+        </fln-modal> -->
     </div>
 </template>
 
@@ -98,6 +117,7 @@ export default {
     name: 'app',
     data(){
         return {
+            activeTab: 'designer',
             selectedComponent: null,
             componentsTree: {
                 children:[
@@ -376,9 +396,17 @@ body{
     overflow: auto;
     cursor: default;
 }
-.report-content{
+.page-content{
+    display: block;
     position: relative;
-    height: 40px;
+    height: 100%;
+    overflow: auto;
+}
+.page-design{
+    margin: 4px 10px;
+    padding: 4px;
+    border: solid 1px #dcdfe6;
+    box-shadow: 0 3px 5px #00000014;
 }
 .xx-section-grid{
     background: url('assets/grid-20.png');

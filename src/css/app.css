@@ -1,0 +1,31 @@
+.tabs-client{
+    position: relative;
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: stretch;
+    flex-direction: column;
+}
+.tabs-client .el-tabs__content{
+    flex: 1;
+    padding: 2px;
+}
+.tabs-client .el-tab-pane{
+    display: flex;
+    flex-direction: column;
+}
+
+.toolbar {
+    padding: 2px 6px;
+    margin-bottom: 2px;
+    border: solid 1px #dcdfe6;
+    margin: 2px;
+    background: #f5f7fa;
+}
+.toolbar .el-button{
+    padding: 2px;
+    border-radius: 0;
+    min-height: 32px;
+    min-width: 32px;
+    margin: 0 1px 0 0;
+}

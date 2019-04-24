@@ -53,15 +53,21 @@
                             </select>
 
                             <!-- color -->
-                            <input
-                                type="color"
-                                v-if="activeProperty==property.name && property.type == 'color'" 
-                                v-model="property.value"
-                                input
-                                @input="onValueChange(property.name, $event.target.value)"
-                            />
+                            <hbox
+                                class="color-picker"
+                                v-if="activeProperty==property.name && property.type == 'color'" >
+                                <input class="client"
+                                    input
+                                    v-model="property.value"
+                                    @input="onValueChange(property.name, $event.target.value)">
+                                <el-color-picker
+                                    @change="onValueChange(property.name, property.value)"
+                                    v-model="property.value"></el-color-picker>
+                            </hbox>
 
-                            <div v-else-if="property.type=='color'" :style="'background:'+property.value" class="fln-inspector-property-name"></div>
+                            <div v-else-if="property.type=='color'" :style="'background:'+property.value" class="fln-inspector-property-name">
+                                {{property.value || 'transparent'}}
+                            </div>
                             <span v-else>{{property.value}}</span>
                         </div>
                     </td>
@@ -137,7 +143,7 @@ export default {
 
 </script>
 
-<style scoped>
+<style>
 .fln-inspector-property-name{
     width: 100px;
     height: 20px;
@@ -147,6 +153,8 @@ export default {
     width: 100px;
     height: 20px;
     overflow: hidden;
+    padding-left: 6px;
+    line-height: 20px;
 }
 .fln-inspector-property-value input, .fln-inspector-property-value select{
     width: 100%;
@@ -154,5 +162,18 @@ export default {
     margin: 0;
     padding: 0 1px;
     border: none;
+}
+.color-picker .el-color-picker{
+    height: 20px;
+    width: 20px;
+}
+.color-picker .el-color-picker__trigger{
+    height: 100%;
+    width: 100%;
+    padding: 0;
+}
+.color-picker input{
+    height: 20px;
+    padding-left: 6px;
 }
 </style>
